@@ -1,6 +1,7 @@
+import os
 import duckdb
 from pathlib import Path
-from dotenv import load_dotenv, dotenv_values
+from dotenv import load_dotenv
 import loguru
 
 from config import DB
@@ -13,17 +14,19 @@ env_path = Path(__file__).parent.parent / ".env"
 if not env_path.exists():
     logger.warning(f"Arquivo .env não encontrado em {env_path}")
 
-# Carregar variáveis de ambiente do arquivo .env
+# Carregar variáveis de ambiente do arquivo .env (não sobrescreve variáveis já
+# definidas no processo, como as injetadas pelo GitHub Actions)
 load_dotenv(dotenv_path=env_path)
 logger.debug(f"Carregando variáveis de ambiente de: {env_path}")
 
 def conectar_motherduck():
     """Conecta ao banco de dados MotherDuck usando variáveis de ambiente."""
     logger.debug("Conectando ao banco de dados MotherDuck...")
-    # Aqui você pode adicionar a lógica de conexão real, por exemplo, usando SQLAlchemy ou outro driver.
-    # Exemplo fictício:
-    connection = dotenv_values(env_path).get("NAME")
-    token = dotenv_values(env_path).get("MOTHERDUCK_TOKEN")
+    # Usa os.getenv para ler tanto do .env local quanto de variáveis de
+    # ambiente reais (ex.: secrets do GitHub Actions), que não existem em
+    # arquivo .env no runner de CI.
+    connection = os.getenv("NAME")
+    token = os.getenv("MOTHERDUCK_TOKEN")
     return connection, token
 
 def carregar_dados(df, tabela: str, schema: str | None = None) -> int:
