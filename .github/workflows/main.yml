@@ -37,7 +37,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Rodar pipeline
-        run: python '../../src/main.py'
+        run: python "${{ github.workspace }}/src/main.py"
         env:
           MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }}
           PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
