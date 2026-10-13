@@ -1,0 +1,45 @@
+name: ETL MotherDuck
+
+on:
+  schedule:
+   - cron: "0 10 * * *"   # 10:00 UTC = 07:00 em Brasilia
+  workflow_dispatch:        # permite rodar manualmente pelo botao "Run workflow"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: etl
+  cancel-in-progress: false  # nao sobrepoe execucoes
+
+jobs:
+  etl:
+    name: Executar ETL diario
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: "Checkout do código"
+        uses: actions/checkout@v4
+
+      - name: "Setup Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: "Informações do ambiente"
+        run: |
+          python --version
+          pip --version
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Rodar pipeline
+        run: python '../../src/main.py'
+        env:
+          MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }}
+          PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
+          PREFECT_API_URL: ${{ secrets.PREFECT_API_URL }}
+          # adicione aqui credenciais das suas fontes (API_KEY_X etc.)

@@ -1,16 +1,19 @@
-
 # ========================
 # Diretórios
 # ========================
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DATA_BRONZE_PATH = PROJECT_ROOT / "data" / "Google_Ads_Dataset.csv"
-LOG_PATH = PROJECT_ROOT / "logs"
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_BRONZE_PATH = str(BASE_DIR / "data" / "Google_Ads_Dataset.csv")
+LOG_PATH = str(BASE_DIR / "logs")
 
 # ========================
 # Banco de dados
 # ========================
 SCHEMA_NAME_BRONZE = None
-TABLE_NAME_BRONZE = "stg_google_ads"
+DB = "google_ads_db"
+SCHEMA_NAME = 'main'
+TABLE_NAME = "stg_google_ads"
 PATTERN_CSV = "*.csv"
 PATTERN_TXT = "*.txt"
 PATTERN_PARQUET = "*.parquet"
