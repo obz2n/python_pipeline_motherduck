@@ -11,6 +11,7 @@ LOG_PATH = str(BASE_DIR / "logs")
 # Banco de dados
 # ========================
 SCHEMA_NAME_BRONZE = None
+# mesmo nome conforme definido no banco de dados MotherDuck
 DB = "google_ads_db"
 SCHEMA_NAME = 'main'
 TABLE_NAME = "stg_google_ads"

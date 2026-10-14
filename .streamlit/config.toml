@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#F2C811"       # Amarelo/Dourado estilo Power BI (ou azul corporativo)
+backgroundColor = "#F5F5F5"    # Fundo cinza-claro limpo (padrão Power BI Service)
+secondaryBackgroundColor = "#FFFFFF" # Fundo dos cartões e barras laterais em branco
+textColor = "#252423"          # Cor do texto principal (cinza escuro)
+font = "sans serif"

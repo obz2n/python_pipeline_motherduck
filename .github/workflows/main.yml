@@ -36,10 +36,25 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r requirements.txt
 
+      - name: "Verificar variáveis de ambiente"
+        run: |
+          if [ -z "$MOTHERDUCK_TOKEN" ]; then
+            echo "::error::Secret MOTHERDUCK_TOKEN está vazio ou não configurado no repositório."
+            echo "Verifique em Settings > Secrets and variables > Actions se o secret 'MOTHERDUCK_TOKEN' existe"
+            echo "e, se ele foi criado como 'Environment secret', adicione 'environment: <nome>' a este job."
+            exit 1
+          fi
+          echo "MOTHERDUCK_TOKEN presente (tamanho: ${#MOTHERDUCK_TOKEN} caracteres)."
+        env:
+          MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }}
+
       - name: Rodar pipeline
         run: python "${{ github.workspace }}/src/main.py"
         env:
           MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }}
-          PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
-          PREFECT_API_URL: ${{ secrets.PREFECT_API_URL }}
+
+      - name: Rodar Streamlit
+        run: streamlit run "${{ github.workspace }}/app/main.py"
+        env:
+          MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }}
           # adicione aqui credenciais das suas fontes (API_KEY_X etc.)
