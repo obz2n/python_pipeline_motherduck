@@ -52,9 +52,3 @@ jobs:
         run: python "${{ github.workspace }}/src/main.py"
         env:
           MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }}
-
-      - name: Rodar Streamlit
-        run: streamlit run "${{ github.workspace }}/app/main.py"
-        env:
-          MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }}
-          # adicione aqui credenciais das suas fontes (API_KEY_X etc.)
