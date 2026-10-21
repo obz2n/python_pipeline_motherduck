@@ -1,4 +1,6 @@
-# python_pipeline_motherduck
+# Python Pipeline com MotherDuck
+
+![img](https://i.postimg.cc/DZ50XLds/motherduck.png)
 
 Pipeline de dados **end-to-end** (ETL) que extrai dados de campanhas do Google Ads, transforma-os e os carrega no [MotherDuck](https://motherduck.com/) (DuckDB na nuvem), com visualização em um dashboard Streamlit e automação diária via GitHub Actions.
 
@@ -48,6 +50,7 @@ pip install -r requirements.txt
 Crie um arquivo `.env` na raiz do projeto com o token do MotherDuck:
 
 ```env
+NAME='nome-do-token'
 MOTHERDUCK_TOKEN='seu-token-aqui'
 ```
 
@@ -65,16 +68,13 @@ Executar o dashboard Streamlit:
 streamlit run app/main.py
 ```
 
-## Testes
-
-```bash
-pytest tests/
-```
-
 ## Automação (CI/CD)
 
 O workflow [.github/workflows/main.yml](.github/workflows/main.yml) executa o pipeline automaticamente todos os dias às 07:00 (horário de Brasília) e pode ser disparado manualmente pela aba **Actions** do repositório. É necessário configurar o secret `MOTHERDUCK_TOKEN` (e, opcionalmente, `PREFECT_API_KEY`/`PREFECT_API_URL`) em **Settings > Secrets and variables > Actions**.
 
+
+## Obs
+Crie o banco diretamente no MotherDuck caso apresente algum erro na etapa de carregamento
 
 ## Autor
 
